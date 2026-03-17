@@ -17,7 +17,7 @@ class BenchTest:
     #@pytest.mark.skip(reason="debug")
     @pytest.mark.parametrize("q", range(max(nqubits)))
     @pytest.mark.parametrize("nqubit", nqubits)
-    @pytest.mark.benchmark(group="exp_single", max_time=1, min_rounds=3, warmup=True)
+    @pytest.mark.benchmark(group="exp_single", max_time=1)
     def bench_expectation(self, benchmark: BenchmarkFixture, nqubit: int, q: int) -> None:
         if q < nqubit:
             sv = Statevec(nqubit=nqubit, data=BasicStates.ZERO)

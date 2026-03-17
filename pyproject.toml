@@ -9,13 +9,15 @@ dependencies = [
     "mypy>=1.19.1",
     "pytest>=9.0.2",
     "pytest-benchmark>=5.2.3",
+    "pytest-codspeed>=4.3.0",
     "ruff>=0.15.6",
 ]
 
 [tool.uv.sources]
 graphix = { git = "https://github.com/TeamGraphix/graphix", rev = "master" }
 
-[tool.pytest]
+[tool.pytest.ini_options]
 addopts = ["--ignore=examples", "--ignore=docs", "--benchmark-autosave"]
 python_classes = ["BenchTest", "Test"]
+python_files = ["bench_*", "test_*"]
 python_functions = ["bench_*", "test_*"]
