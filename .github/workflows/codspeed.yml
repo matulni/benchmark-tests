@@ -38,4 +38,4 @@ jobs:
         uses: CodSpeedHQ/action@v4
         with:
           mode: simulation
-          run: pytest benchmarks/bench_statevec --codspeed
+          run: pytest benchmarks/bench_statevec.py --codspeed
