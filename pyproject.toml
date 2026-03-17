@@ -14,3 +14,8 @@ dependencies = [
 
 [tool.uv.sources]
 graphix = { git = "https://github.com/TeamGraphix/graphix", rev = "master" }
+
+[tool.pytest]
+addopts = ["--ignore=examples", "--ignore=docs", "--benchmark-autosave"]
+python_classes = ["BenchTest", "Test"]
+python_functions = ["bench_*", "test_*"]
