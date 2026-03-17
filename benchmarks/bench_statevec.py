@@ -11,19 +11,17 @@ if TYPE_CHECKING:
     from pytest_benchmark import BenchmarkFixture
 
 
-nqubits = (2, 3)
+nqubits = range(1, 12)
+nqubit = 20
 
 class BenchTest:
-    #@pytest.mark.skip(reason="debug")
-    @pytest.mark.parametrize("q", range(max(nqubits)))
-    @pytest.mark.parametrize("nqubit", nqubits)
-    @pytest.mark.benchmark(group="exp_single", max_time=1)
-    def bench_expectation(self, benchmark: BenchmarkFixture, nqubit: int, q: int) -> None:
-        if q < nqubit:
-            sv = Statevec(nqubit=nqubit, data=BasicStates.ZERO)
-            op = Clifford.H.matrix
-
-            def run():
-                return sv.expectation_single(op, q)
-
-            benchmark(run)
+    @pytest.mark.benchmark(max_time=1)
+    def bench_evolve_single(
+        self, benchmark: BenchmarkFixture) -> None:
+        sv = Statevec(nqubit=nqubit, data=BasicStates.ZERO)
+        op = Clifford.H.matrix
+        def run():
+            evol = sv.evolve_single
+            for q in range(nqubit):
+                evol(op, q)
+        benchmark(run)
