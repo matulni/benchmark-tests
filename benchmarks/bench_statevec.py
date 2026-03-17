@@ -11,19 +11,25 @@ if TYPE_CHECKING:
     from pytest_benchmark import BenchmarkFixture
 
 
-nqubits = (2, 3)
+nqubits = range(1, 12)
+
 
 class BenchTest:
-    #@pytest.mark.skip(reason="debug")
-    @pytest.mark.parametrize("q", range(max(nqubits)))
-    @pytest.mark.parametrize("nqubit", nqubits)
-    @pytest.mark.benchmark(group="exp_single", max_time=1)
-    def bench_expectation(self, benchmark: BenchmarkFixture, nqubit: int, q: int) -> None:
-        if q < nqubit:
-            sv = Statevec(nqubit=nqubit, data=BasicStates.ZERO)
-            op = Clifford.H.matrix
+    # @pytest.mark.skip(reason="debug")
+    @pytest.mark.parametrize("nqubit, q", [(n, q) for n in nqubits for q in range(n)])
+    @pytest.mark.benchmark(max_time=1)
+    def bench_expectation_single(
+        self, benchmark: BenchmarkFixture, nqubit: int, q: int
+    ) -> None:
+        sv = Statevec(nqubit=nqubit, data=BasicStates.ZERO)
+        op = Clifford.H.matrix
+        benchmark(lambda: sv.expectation_single(op, q))
 
-            def run():
-                return sv.expectation_single(op, q)
-
-            benchmark(run)
+    @pytest.mark.parametrize("nqubit, q", [(n, q) for n in nqubits for q in range(n)])
+    @pytest.mark.benchmark(max_time=1)
+    def bench_evolve_single(
+        self, benchmark: BenchmarkFixture, nqubit: int, q: int
+    ) -> None:
+        sv = Statevec(nqubit=nqubit, data=BasicStates.ZERO)
+        op = Clifford.H.matrix
+        benchmark(lambda: sv.evolve_single(op, q))
