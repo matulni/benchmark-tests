@@ -16,7 +16,7 @@ on:
 jobs:
   codspeed:
     name: Run benchmarks
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
