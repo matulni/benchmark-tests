@@ -1,0 +1,16 @@
+[project]
+name = "benchmark-tests"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "graphix",
+    "mypy>=1.19.1",
+    "pytest>=9.0.2",
+    "pytest-benchmark>=5.2.3",
+    "ruff>=0.15.6",
+]
+
+[tool.uv.sources]
+graphix = { git = "https://github.com/TeamGraphix/graphix", rev = "master" }
